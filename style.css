@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    padding: 20px 0;
+}
+
+.title {
+    text-align: center;
+}
+
+
+.main {
+    display: flex;
+    justify-content: center;
+    
+}
+.grid {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(16,1fr);
+    grid-template-rows: repeat(16,1fr);
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+
+}
+
+
+.grid-item{
+    user-select: none;
+}
+
+/* .grid-item:hover{
+    background-color: red;
+} */
