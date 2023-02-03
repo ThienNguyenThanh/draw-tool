@@ -14,7 +14,7 @@ canvas.width = window.innerWidth;
 
 
 let ctx = canvas.getContext("2d");
-ctx.imageSmoothingEnabled  = true;
+// ctx.imageSmoothingEnabled  = true;
 
 let mouseDown = false
 document.body.onmousedown = () => (mouseDown = true)
@@ -52,6 +52,8 @@ document.body.onmouseup = () => (mouseDown = false)
 
 // let [prevX, prevY] = [null, null];
 ctx.lineWidth = 20;
+ctx.lineCap = 'round';
+ctx.strokeType = 'red';
 
 // let drawEnable = false;
 
@@ -101,8 +103,8 @@ function draw(e) {
   ctx.stroke();
 
   // for smoother drawing
-  // ctx.beginPath();
-  // ctx.moveTo(x, y);
+  ctx.beginPath();
+  ctx.moveTo(x, y);
 }
 
 window.addEventListener("mousedown", startDraw);
