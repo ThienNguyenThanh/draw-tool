@@ -65,6 +65,42 @@ html {
     pointer-events: auto;
 }
 
+.tooltips-text {
+    visibility: hidden;
+    position: absolute;
+    padding: 8px;
+    top: 3px;
+    left: 140%;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    color: #4f4f4f;
+    /* z-index: 2; */
+}
+
+.tool:hover .tooltips-text{
+    visibility: visible;
+}
+
+
+.tooltips-text::before {
+    content: "";
+    position: absolute;
+    transform: rotate(45deg);
+    background-color: #f1f1f1;
+    padding: 5px;
+    top: 12px;
+    left: -4px;
+    /* z-index: 1; */
+}
+
+
+#main-canvas-container {
+    background-color: #b3b3b3;
+}
+
+
+
+
 
 
 /* .grid-item:hover{
