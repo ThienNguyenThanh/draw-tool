@@ -9,8 +9,8 @@ let gridContainer = document.querySelector('.grid');
 let clearButton = document.getElementById('clear-button');
 
 let canvas = document.getElementById('canvas');
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
+canvas.height = 900;
+canvas.width = 1000;
 
 
 let ctx = canvas.getContext("2d");
@@ -127,8 +127,8 @@ function clearCanvas() {
 let cursor = document.getElementById('circularcursor');
 
 document.body.onmousemove = function(e) {
-  cursor.style.top = Number(e.clientY -10) + 'px';
-  cursor.style.left = Number(e.clientX - 10) + 'px';
+  cursor.style.top = Number(e.clientY) + 'px';
+  cursor.style.left = Number(e.clientX ) + 'px';
   // console.log(Number(e.clientX - 2) + 'px')
 }
 

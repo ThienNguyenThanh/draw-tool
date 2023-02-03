@@ -13,14 +13,39 @@
 <body>
     <div id="root">
         <div id="settings-bar"></div>
-        <div id="tools-bar"></div>
+        <div id="tools-bar">
+            <div class="tool pointer">
+                <img src="./assets/images/pointer.svg" draggable="false">
+                
+            <div class="tool draw">
+                <img src="./assets/images/draw_pen.svg" draggable="false">
+            </div>
+            <div class="tool text">
+                <img src="./assets/images/text.svg" draggable="false">
+            </div>
+            <div class="tool shape">
+                <img src="./assets/images/shape.svg" draggable="false">
+            </div>
+            <div class="tool color">
+                <img src="" alt="color" draggable="false">
+            </div>
+            <div class="tool zoom">
+                <img src="./assets/images/zoom.svg" draggable="false">
+            </div>
+            <div class="tool undo">
+                <img src="./assets/images/undo.svg" draggable="false">
+            </div>
+            <div class="tool delete">
+                <img src="./assets/images/delete.svg" draggable="false">
+            </div>
+        </div>
         <div id="main-canvas-container">
             <canvas id="canvas" class="canvas"></canvas>
             <div class="scrollbar"></div>
             <div class="scrollbar"></div>
         </div>
     </div>
-    <div id="circularcursor"></div>
+   
    
     
     <script src="sketchpad.js"></script>
