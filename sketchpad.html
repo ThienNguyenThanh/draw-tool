@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.17/paper-core.js" integrity="sha512-1SwBuul5bZoSpBNHX/6v03SqFDv/ugs2xduWe50FlvllUAjRbn7TEyfjNVsbW5cv/4IIChsAkAAJB0At/P/37w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div id="root">
@@ -19,7 +19,7 @@
                 <span class="tooltips-text">Select</span>
             </div>
             <div class="tool draw">
-                <img src="./assets/images/draw_pen.svg" draggable="false">
+                <img src="./assets/images/draw_pen.svg" draggable="false" onclick="drawLine.activate();">
                 <span class="tooltips-text">Pen</span>
             </div>
             <div class="tool text">
@@ -49,12 +49,13 @@
             </div>
         </div>
         <div id="main-canvas-container">
-            <canvas id="canvas" class="canvas"></canvas>
+            <canvas id="canvas" class="canvas" ></canvas>
             <div class="scrollbar"></div>
             <div class="scrollbar"></div>
         </div>
     </div>
-   
+    <a href="#" onclick="tool1.activate();">Lines</a>
+    <a href="#" onclick="tool2.activate();">Clouds</a>
    
     
     <script src="sketchpad.js"></script>
