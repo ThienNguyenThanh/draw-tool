@@ -61,29 +61,37 @@ let drawing = false;
 var drawLine, tool2;
 
 paper.install(window);
-window.onload = function() {
+window.onload = function () {
 	// Setup directly from canvas id:
 	paper.setup('canvas');
 	var path;
-		function onMouseDown(event) {
-			path = new Path();
-			path.strokeColor = 'black';
-			path.add(event.point);
-		}
+	function onMouseDown(event) {
+		path = new Path();
+		path.strokeColor = 'black';
+		path.add(event.point);
+	}
 
-		drawLine = new Tool();
-		drawLine.onMouseDown = onMouseDown;
+	drawLine = new Tool();
+	drawLine.onMouseDown = onMouseDown;
+	drawLine.onMouseUp = onMouseUp;
 
-		drawLine.onMouseDrag = function(event) {
-			path.add(event.point);
-		}
+	drawLine.onMouseDrag = function (event) {
+		path.add(event.point);
+	}
 
-		tool2 = new Tool();
-		tool2.minDistance = 20;
-		tool2.onMouseDown = onMouseDown;
+	function onMouseUp(event) {
+		// Add the mouse up position:
+		path.simplify(10);
+	}
 
-		tool2.onMouseDrag = function(event) {
-			// Use the arcTo command to draw cloudy lines
-			path.arcTo(event.point);
-		}
+
+
+	tool2 = new Tool();
+	tool2.minDistance = 20;
+	tool2.onMouseDown = onMouseDown;
+
+	tool2.onMouseDrag = function (event) {
+		// Use the arcTo command to draw cloudy lines
+		path.arcTo(event.point);
+	}
 }
