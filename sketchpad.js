@@ -1,6 +1,15 @@
-const DEFAULT_COLOR = '#b2d6ff';
+const DEFAULT_COLOR = 'black';
 const DEFAULT_MODE = 'draw';
 const DEFAULT_SIZE = 16;
+
+
+const colorPicker = document.getElementById("color-picker");
+
+colorPicker.addEventListener('change', ()=>{
+	colorPicker.style.background = colorPicker.value;
+	currentColor = colorPicker.value;
+})
+
 
 let currentColor = DEFAULT_COLOR;
 let currentMode = DEFAULT_MODE;
