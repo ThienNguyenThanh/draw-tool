@@ -15,7 +15,7 @@
         <div id="settings-bar"></div>
         <div id="tools-bar">
             <div class="tool pointer">
-                <img src="./assets/images/pointer.svg" draggable="false">
+                <img src="./assets/images/pointer.svg" draggable="false" onclick="selectLine.activate();">
                 <span class="tooltips-text">Select</span>
             </div>
             <div class="tool draw">
@@ -23,11 +23,11 @@
                 <span class="tooltips-text">Pen</span>
             </div>
             <div class="tool text">
-                <img src="./assets/images/text.svg" draggable="false">
+                <img src="./assets/images/text.svg" draggable="false" onclick="textPointer.activate();">
                 <span class="tooltips-text">Text</span>
             </div>
             <div class="tool shape">
-                <img src="./assets/images/shape.svg" draggable="false">
+                <img src="./assets/images/shape.svg" draggable="false" onclick="drawShape.activate();">
                 <span class="tooltips-text">Shape</span>
 
             </div>
@@ -42,8 +42,12 @@
                 <img src="./assets/images/undo.svg" draggable="false">
                 <span class="tooltips-text">Undo</span>
             </div>
+            <div class="tool eraser">
+                <img src="" alt="eraser" draggable="false">
+                <span class="tooltips-text">Eraser</span>
+            </div>
             <div class="tool delete">
-                <img src="./assets/images/delete.svg" draggable="false">
+                <img src="./assets/images/delete.svg" draggable="false" onclick="deleteItem.activate();">
                 <span class="tooltips-text">Delete</span>
 
             </div>
@@ -54,8 +58,6 @@
             <div class="scrollbar"></div>
         </div>
     </div>
-    <a href="#" onclick="tool1.activate();">Lines</a>
-    <a href="#" onclick="tool2.activate();">Clouds</a>
    
     
     <script src="sketchpad.js"></script>

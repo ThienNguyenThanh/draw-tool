@@ -13,85 +13,128 @@ canvas.height = 900;
 canvas.width = 1000;
 
 
-let ctx = canvas.getContext("2d");
-// ctx.imageSmoothingEnabled  = true;
-
-let mouseDown = false
-document.body.onmousedown = () => (mouseDown = true)
-document.body.onmouseup = () => (mouseDown = false)
-
-ctx.lineWidth = 20;
-ctx.lineCap = 'round';
-ctx.strokeType = 'red';
-
-let drawing = false;
-
-// function startDraw(e) {
-//   drawing = true;
-//   ctx.beginPath();
-//   draw(e)
-// }
-
-// function endDraw(e) {
-//   drawing = false;
-// }
-
-// function draw(e) {
-//   if (!drawing) return;
-
-// //   let { x, y } = getMousePos(canvas, e);
-//   let [ x, y ] = [e.clientX, e.clientY];
-
-//   ctx.lineTo(x, y);
-//   ctx.stroke();
-
-//   // for smoother drawing
-//   ctx.beginPath();
-//   ctx.moveTo(x, y);
-// }
-
-// window.addEventListener("mousedown", startDraw);
-// window.addEventListener("mouseup", endDraw);
-// window.addEventListener("mousemove", draw);
-
-// function clearCanvas() {
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-// }
-
-var drawLine, tool2;
+var drawLine, selectLine, drawShape, textPointer, deleteItem;
 
 paper.install(window);
 window.onload = function () {
 	// Setup directly from canvas id:
 	paper.setup('canvas');
-	var path;
-	function onMouseDown(event) {
-		path = new Path();
-		path.strokeColor = 'black';
-		path.add(event.point);
-	}
+	let path;
 
+
+	// DRAW TOOL
 	drawLine = new Tool();
-	drawLine.onMouseDown = onMouseDown;
-	drawLine.onMouseUp = onMouseUp;
 
-	drawLine.onMouseDrag = function (event) {
+	drawLine.onMouseDown = drawOnMouseDown;
+	drawLine.onMouseUp = drawOnMouseUp;
+	drawLine.onMouseDrag = drawOnMouseDrag;
+
+	function drawOnMouseDown(event) {
+		path = new Path();
+		path.strokeColor = currentColor;
 		path.add(event.point);
 	}
 
-	function onMouseUp(event) {
-		// Add the mouse up position:
+	function drawOnMouseDrag (event) {
+		path.add(event.point);
+	}
+
+	function drawOnMouseUp(event) {
 		path.simplify(10);
 	}
+	// END OF DRAW TOOL
 
+	// TEXT TOOL
+	textPointer = new Tool();
 
-
-	tool2 = new Tool();
-	tool2.minDistance = 20;
-	tool2.onMouseDown = onMouseDown;
-
-	tool2.onMouseDrag = function (event) {
-		// Use the arcTo command to draw cloudy lines
-		path.arcTo(event.point);
+	let startPoint,text;
+	textPointer.onMouseDown = function(event){
+		startPoint = event.point;
+		text = new PointText({
+			point: [startPoint.x, startPoint.y],
+			content: '',
+			justification: 'center',
+			fontSize: 15
+		})
 	}
+
+	textPointer.onKeyDown = function textOnKeyDown(event){
+		if(event.key === 'backspace'){
+			text.content = text.content.replace(/.$/, '');
+		}else if(event.key === 'space'){
+			text.content += ' ';
+		}else {
+			text.content += event.key;
+		}
+	}
+	// END OF TEXT TOOL
+
+	
+	// DELETE TOOL
+	deleteItem = new Tool();
+	deleteItem.onMouseDown = deleteItemOnMouseDown;
+	deleteItem.onMouseMove = deleteItemOnMouseMove;
+
+	function deleteItemOnMouseMove(event) {
+		project.activeLayer.selected = false;
+		if (event.item)
+			event.item.selected = true;
+	}
+	function deleteItemOnMouseDown(event){
+		var hitResult = project.hitTest(event.point, hitOptions);
+		if (!hitResult)
+			return;
+
+		hitResult.item.remove();
+	}
+	// END OF DELETE TOOL
+
+
+	// SELECT TOOL
+	let hitResult;
+	let hitOptions = {
+		segments: true,
+		stroke: true,
+		fill: true,
+		tolerance: 5
+	};
+	
+	selectLine = new Tool();
+	selectLine.onMouseDown = selectOnMouseDown;
+	selectLine.onMouseMove = selectOnMouseMove;
+	selectLine.onMouseDrag = selectOnMouseDrag;
+	
+	function selectOnMouseDown(event) {
+		// segment = path = null;
+		hitResult = project.hitTest(event.point, hitOptions);
+		if (!hitResult)
+
+			return;
+
+		if (event.modifiers.shift) {
+			if (hitResult.type == 'segment') {
+				hitResult.segment.remove();
+			};
+			return;
+		}
+
+		if (hitResult) {
+			path = hitResult.item;
+		}
+	}
+	
+	function selectOnMouseMove(event) {
+		project.activeLayer.selected = false;
+		if (event.item)
+			event.item.selected = true;
+	}
+	
+	function selectOnMouseDrag(event) {
+		if(path && hitResult){
+			path.position.x += event.delta.x;
+			path.position.y += event.delta.y;
+		}
+	}
+	// END OF SELECT TOOL
+	
 }
