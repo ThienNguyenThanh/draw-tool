@@ -10,58 +10,38 @@ let pen, pointer, shape, textPointer, deleteItem;
 
 
 let listTools = document.getElementsByClassName('tool');
-console.log(listTools)
 for (var i = 0; i < listTools.length; i++) {
 	listTools[i].addEventListener("click", function() {
-	  var current = document.getElementsByClassName("active");
-	  if(current[0]){
-		current[0].className = current[0].className.replace(" active", "");
-	  }
-	  this.className += " active";
+		
+		currentMode = this.className.split(' ')[1]
+		let listTool = {
+			"drawpen": pen,
+			"pointer": pointer,
+			"shape": shape,
+			"textPointer":textPointer,
+			"colors": pointer,
+			"deleteItem": deleteItem
+		}
+
+		let prev = document.getElementsByClassName("active");
+		let prevMode = prev[0].className.split(' ')[1]
+
+		// Change img src
+		if(prevMode !== 'colors'){
+			prev[0].firstElementChild.src = prev[0].firstElementChild.src.replace(/\/\w+On\./gm, `/${prevMode}.`);
+		}
+		if( currentMode !== 'colors'){
+			this.firstElementChild.src = this.firstElementChild.src.replace(/\/\w+\./gm, `/${currentMode}On.`);
+		}
+
+		// Change background of img
+		prev[0].className = prev[0].className.replace(" active", "");
+		this.className += " active";
+	
+		// Activate tool
+		listTool[currentMode].activate();
 	});
   }
-
-function changeTool(image){
-	currentMode = image.parentElement.className.split(' ')[1]
-	console.log(currentMode)
-	// switch(currentMode){
-	// 	case "pointer":
-	// 		image.parentElement.className += " active";
-	// 		pointer.activate();
-	// 		break;
-	// 	case "pen":
-	// 		image.parentElement.className += " active";
-	// 		pen.activate();
-	// 		break;
-	// 	case "textPointer":
-	// 		image.parentElement.className += " active";
-	// 		textPointer.activate();
-	// 		break;
-	// 	case "shape":
-	// 		shape.activate();
-	// 		break;
-	// 	case "deleteItem":
-	// 		deleteItem.activate();
-	// 		break;
-	// }
-	// let listTool = {
-	// 	"pen": pen,
-	// 	"pointer": pointer,
-	// 	"shape": shape,
-	// 	"textPointer":textPointer,
-	// 	"deleteItem": deleteItem
-	// }
-	// listTool[currentMode].activate();
-	// image.parentElement.className.replace(" active", '')
-
-	// if(image.parentElement.className.includes('active')){
-	// }else{
-	// 	image.src = "./assets/images/pointer-on.svg";
-	// 	image.parentElement.className += " active";
-	// 	pointer.activate();
-	// }
-	
-}
 
 
 const colorPicker = document.getElementById("color-picker");
