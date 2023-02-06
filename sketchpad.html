@@ -14,20 +14,20 @@
     <div id="root">
         <div id="settings-bar"></div>
         <div id="tools-bar">
-            <div class="tool pointer">
-                <img src="./assets/images/pointer.svg" draggable="false" onclick="selectLine.activate();">
+            <div class="tool pointer">    
+                <img src="./assets/images/pointer.svg" draggable="false" onclick="changeTool(this)">
                 <span class="tooltips-text">Select</span>
             </div>
-            <div class="tool draw">
-                <img src="./assets/images/draw_pen.svg" draggable="false" onclick="drawLine.activate();">
+            <div class="tool pen">
+                <img src="./assets/images/draw_pen.svg" draggable="false" onclick="changeTool(this)">
                 <span class="tooltips-text">Pen</span>
             </div>
-            <div class="tool text">
-                <img src="./assets/images/text.svg" draggable="false" onclick="textPointer.activate();">
+            <div class="tool textPointer">
+                <img src="./assets/images/text.svg" draggable="false" onclick="changeTool(this)">
                 <span class="tooltips-text">Text</span>
             </div>
             <div class="tool shape">
-                <img src="./assets/images/shape.svg" draggable="false" onclick="drawShape.activate();">
+                <img src="./assets/images/shape.svg" draggable="false" onclick="changeTool(this)">
                 <span class="tooltips-text">Shape</span>
 
             </div>
@@ -37,20 +37,20 @@
                 
             </div>
             <div class="tool zoom">
-                <img src="./assets/images/zoom.svg" draggable="false">
+                <img src="./assets/images/zoom.svg" draggable="false" onclick="changeTool(this)">
                 
                 <span class="tooltips-text">Zoom</span>
             </div>
             <div class="tool undo">
-                <img src="./assets/images/undo.svg" draggable="false">
+                <img src="./assets/images/undo.svg" draggable="false" onclick="changeTool(this)">
                 <span class="tooltips-text">Undo</span>
             </div>
             <div class="tool eraser">
-                <img src="" alt="eraser" draggable="false">
+                <img src="" alt="eraser" draggable="false" onclick="changeTool(this)">
                 <span class="tooltips-text">Eraser</span>
             </div>
-            <div class="tool delete">
-                <img src="./assets/images/delete.svg" draggable="false" onclick="deleteItem.activate();">
+            <div class="tool deleteItem">
+                <img src="./assets/images/delete.svg" draggable="false" onclick="changeTool(this)">
                 <span class="tooltips-text">Delete</span>
 
             </div>

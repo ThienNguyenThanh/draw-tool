@@ -7,6 +7,13 @@ html {
     cursor: crosshair;
   }
 
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #b3b3b3;
+}
 
 #tools-bar{
     display: inline-block;
@@ -27,6 +34,10 @@ html {
     position: relative;
     border-radius: 50%;
     pointer-events: auto;
+}
+
+.tool.active{
+  background-color: #000;
 }
 
 .tooltips-text {
@@ -64,13 +75,7 @@ html {
 
 /* Import Google font - Poppins */
 
-body{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: #b3b3b3;
-}
+
 
 
 
