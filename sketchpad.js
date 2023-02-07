@@ -6,9 +6,15 @@ let currentColor = DEFAULT_COLOR;
 let currentMode = DEFAULT_MODE;
 let currentSize = DEFAULT_SIZE;
 
+// Tools Bar
 let pen, pointer, shape, textPointer, deleteItem;
 
+// Undo/redo
+let historyStack = [null];
+let state = 0;
 
+
+// Tool Switching Effect
 let listTools = document.getElementsByClassName('tool');
 for (var i = 0; i < listTools.length; i++) {
 	listTools[i].addEventListener("click", function() {
@@ -24,7 +30,7 @@ for (var i = 0; i < listTools.length; i++) {
 		}
 
 		let prev = document.getElementsByClassName("active");
-		let prevMode = prev[0].className.split(' ')[1]
+		let prevMode = prev[0].className.split(' ')[1];
 
 		// Change img src
 		if(prevMode !== 'colors'){
@@ -58,12 +64,34 @@ canvas.height = 900;
 canvas.width = 1000;
 
 
+function undo(){
+	if(state > 0){
+		console.log('undo click')
+		historyStack[state].remove();
+		state--;
+	}
+}
+
+function redo(){
+	if(state < historyStack.length -1){
+		console.log('redo click')
+        state++;
+        let newPath = new Path(historyStack[state].pathData);
+		newPath.strokeColor = historyStack[state].strokeColor;
+
+		historyStack[state] = newPath;
+
+		// new Path().unite(historyStack[state]);
+    }
+}
+
 
 paper.install(window);
 window.onload = function () {
 	// Setup directly from canvas id:
 	paper.setup('canvas');
 	let path;
+	
 	
 
 	// DRAW TOOL
@@ -76,6 +104,7 @@ window.onload = function () {
 	function drawOnMouseDown(event) {
 		path = new Path();
 		path.strokeColor = currentColor;
+		path.strokeWidth = currentSize;
 		path.add(event.point);
 	}
 
@@ -85,6 +114,12 @@ window.onload = function () {
 
 	function drawOnMouseUp(event) {
 		path.simplify(10);
+
+		if(state < historyStack.length - 1){
+			historyStack = historyStack.slice(0, state +1);
+		}
+		historyStack.push(path);
+		state++;
 	}
 	// END OF DRAW TOOL
 
@@ -97,7 +132,6 @@ window.onload = function () {
 		text = new PointText({
 			point: [startPoint.x, startPoint.y],
 			content: '',
-			justification: 'center',
 			fontSize: 15
 		})
 	}
@@ -111,6 +145,7 @@ window.onload = function () {
 			text.content += event.key;
 		}
 	}
+
 	// END OF TEXT TOOL
 
 	
@@ -180,5 +215,8 @@ window.onload = function () {
 		}
 	}
 	// END OF SELECT TOOL
+
+	// UNDO TOOL
+	// END OF UNDO TOOL
 	
 }

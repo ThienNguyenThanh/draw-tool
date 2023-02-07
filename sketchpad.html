@@ -41,9 +41,13 @@
                 
                 <span class="tooltips-text">Zoom</span>
             </div>
-            <div class="tool undo">
-                <img src="./assets/images/undo.svg" draggable="false">
+            <div class="undo" onclick="undo();">
+                <img src="./assets/images/undo.svg" draggable="false" >
                 <span class="tooltips-text">Undo</span>
+            </div>
+            <div class="redo" onclick="redo();">
+                <img src="./assets/images/redo.svg" draggable="false" >
+                <span class="tooltips-text">Redo</span>
             </div>
             <div class="tool eraser">
                 <img src="" alt="eraser" draggable="false">
@@ -54,6 +58,7 @@
                 <span class="tooltips-text">Delete</span>
 
             </div>
+            
         </div>
         <div id="main-canvas-container">
             <canvas id="canvas" class="canvas" ></canvas>

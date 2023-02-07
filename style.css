@@ -36,6 +36,32 @@ body{
     pointer-events: auto;
 }
 
+.undo,
+.redo {
+  display: inline-block;
+  width: 41px;
+  height: 41px;
+  background-color: rgba(242,242,242,0.98);
+  /* margin-left: 1rem 0; */
+  position: relative;
+  border-radius: 50%;
+  pointer-events: auto;
+}
+
+.undo:hover .tooltips-text{
+  visibility: visible;
+}
+
+.redo img {
+  /* background-color: rebeccapurple; */
+  margin-top: 8px;
+  margin-left: 8px;
+}
+
+.redo:hover .tooltips-text{
+  visibility: visible;
+}
+
 .tool.active{
   background-color: #000;
 }
