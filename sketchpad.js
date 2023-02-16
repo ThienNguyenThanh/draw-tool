@@ -160,32 +160,33 @@ window.onload = function () {
 	var tmpGroup, mask
 
 	eraser.onMouseDown = function(event) {
-		// TODO: deal w/ noop when activeLayer has no children
-		//       right now we just draw in white
 
-		// create the path object that will record the toolpath
-		path = new Path({
-		strokeWidth: 20 * view.pixelRatio,
-		strokeCap: 'round',
-		strokeJoin: 'round',
-		strokeColor: 'white'
-		})
+		// Erase only when activeLayer has children
+		if(topLayer.children.length !== 0){
+			// create the path object that will record the toolpath
+			path = new Path({
+				strokeWidth: 20 * view.pixelRatio,
+				strokeCap: 'round',
+				strokeJoin: 'round',
+				strokeColor: 'white'
+			})
 
-		// learned about this blend stuff from this issue on the paperjs repo:
-		// https://github.com/paperjs/paper.js/issues/1313
+			// learned about this blend stuff from this issue on the paperjs repo:
+			// https://github.com/paperjs/paper.js/issues/1313
 
-		// move everything on the active layer into a group with 'source-out' blend
-		tmpGroup = new Group({
-			children: topLayer.removeChildren(),
-			blendMode: 'source-out',
-			insert: false
-		})
+			// move everything on the active layer into a group with 'source-out' blend
+			tmpGroup = new Group({
+				children: topLayer.removeChildren(),
+				blendMode: 'source-out',
+				insert: false
+			})
 
-		// // combine the path and group in another group with a blend of 'source-over'
-		mask = new Group({
-			children: [path, tmpGroup],
-			blendMode: 'source-over'
-		})
+			// // combine the path and group in another group with a blend of 'source-over'
+			mask = new Group({
+				children: [path, tmpGroup],
+				blendMode: 'source-over'
+			})
+		}
 	}
 
 	eraser.onMouseDrag = function(event) {
