@@ -1,17 +1,17 @@
-const DEFAULT_COLOR = 'black';
-const DEFAULT_MODE = 'draw';
-const DEFAULT_SIZE = 16;
+const DEFAULT_COLOR = 'black',
+ 	  DEFAULT_MODE = 'draw',
+ 	  DEFAULT_SIZE = 16;
 
-let currentColor = DEFAULT_COLOR;
-let currentMode = DEFAULT_MODE;
-let currentSize = DEFAULT_SIZE;
+let currentColor = DEFAULT_COLOR,
+ 	currentMode = DEFAULT_MODE,
+ 	currentSize = DEFAULT_SIZE;
 
 // Tools Bar
-let pen, pointer, shape, textPointer, deleteItem;
+let pen, pointer, shape, textPointer,eraser, deleteItem;
 
 // Undo/redo
-let historyStack = [null];
-let state = 0;
+let historyStack = [null],
+	state = 0;
 
 
 // Tool Switching Effect
@@ -26,6 +26,7 @@ for (var i = 0; i < listTools.length; i++) {
 			"shape": shape,
 			"textPointer":textPointer,
 			"colors": pointer,
+			"eraser": eraser,
 			"deleteItem": deleteItem
 		}
 
@@ -43,7 +44,7 @@ for (var i = 0; i < listTools.length; i++) {
 		// Change background of img
 		prev[0].className = prev[0].className.replace(" active", "");
 		this.className += " active";
-	
+		
 		// Activate tool
 		listTool[currentMode].activate();
 	});
@@ -90,8 +91,11 @@ paper.install(window);
 window.onload = function () {
 	// Setup directly from canvas id:
 	paper.setup('canvas');
-	let path;
-	
+	let path,
+		// this layer holds the background pattern
+		bottomLayer = new Layer(),  
+		// new layer for drawing and erasing on
+		topLayer = new Layer();
 	
 
 	// DRAW TOOL
@@ -105,6 +109,7 @@ window.onload = function () {
 		path = new Path();
 		path.strokeColor = currentColor;
 		path.strokeWidth = currentSize;
+		path.strokeCap = 'round'
 		path.add(event.point);
 	}
 
@@ -148,6 +153,46 @@ window.onload = function () {
 
 	// END OF TEXT TOOL
 
+	// ERASER TOOL
+	eraser = new Tool()
+	eraser.minDistance = 10
+
+	var tmpGroup, mask
+
+	eraser.onMouseDown = function(event) {
+		// TODO: deal w/ noop when activeLayer has no children
+		//       right now we just draw in white
+
+		// create the path object that will record the toolpath
+		path = new Path({
+		strokeWidth: 20 * view.pixelRatio,
+		strokeCap: 'round',
+		strokeJoin: 'round',
+		strokeColor: 'white'
+		})
+
+		// learned about this blend stuff from this issue on the paperjs repo:
+		// https://github.com/paperjs/paper.js/issues/1313
+
+		// move everything on the active layer into a group with 'source-out' blend
+		tmpGroup = new Group({
+			children: topLayer.removeChildren(),
+			blendMode: 'source-out',
+			insert: false
+		})
+
+		// // combine the path and group in another group with a blend of 'source-over'
+		mask = new Group({
+			children: [path, tmpGroup],
+			blendMode: 'source-over'
+		})
+	}
+
+	eraser.onMouseDrag = function(event) {
+		// onMouseDrag simply adds points to the path
+		path.add(event.point)
+	}
+	// END OF ERASER TOOL
 	
 	// deleteItem TOOL
 	deleteItem = new Tool();
