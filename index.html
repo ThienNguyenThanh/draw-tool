@@ -11,6 +11,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.17/paper-core.js" integrity="sha512-1SwBuul5bZoSpBNHX/6v03SqFDv/ugs2xduWe50FlvllUAjRbn7TEyfjNVsbW5cv/4IIChsAkAAJB0At/P/37w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
+    <div class="slider">
+        <input type="range" min="0" max="200" value="100" oninput="rangeValue.innerText = this.value">
+        <p id="rangeValue">100</p>
+        </div>
     <div id="root">
         <div id="settings-bar"></div>
         <div id="tools-bar">
@@ -22,6 +26,7 @@
                 <img src="./assets/images/drawpenOn.svg" draggable="false">
                 <span class="tooltips-text">Pen</span>
             </div>
+            
             <div class="tool textPointer">
                 <img src="./assets/images/textPointer.svg" draggable="false">
                 <span class="tooltips-text">Text</span>

@@ -21,13 +21,13 @@ for (var i = 0; i < listTools.length; i++) {
 		
 		currentMode = this.className.split(' ')[1]
 		let listTool = {
-			"drawpen": pen,
-			"pointer": pointer,
-			"shape": shape,
-			"textPointer":textPointer,
-			"colors": pointer,
-			"eraser": eraser,
-			"deleteItem": deleteItem
+			"drawpen": [pen, "crosshair"],
+			"pointer": [pointer, "default"],
+			"shape": [shape, "crosshair"],
+			"textPointer":[textPointer, "text"],
+			"colors": [pointer, "default"],
+			"eraser": [eraser, "default"],
+			"deleteItem": [deleteItem, "default"]
 		}
 
 		let prev = document.getElementsByClassName("active");
@@ -45,8 +45,10 @@ for (var i = 0; i < listTools.length; i++) {
 		prev[0].className = prev[0].className.replace(" active", "");
 		this.className += " active";
 		
+		let body = document.getElementsByTagName("BODY")[0];
+		body.style.cursor = listTool[currentMode][1];
 		// Activate tool
-		listTool[currentMode].activate();
+		listTool[currentMode][0].activate();
 	});
   }
 
@@ -149,6 +151,12 @@ window.onload = function () {
 		}else {
 			text.content += event.key;
 		}
+
+		if(state < historyStack.length - 1){
+			historyStack = historyStack.slice(0, state +1);
+		}
+		historyStack.push(text);
+		state++;
 	}
 
 	// END OF TEXT TOOL
